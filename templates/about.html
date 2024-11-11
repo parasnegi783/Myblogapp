@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block title %}About{% endblock title %}
+
+{% block content %}
+
+<div class='bg-gray-800 text-white p-3 md:px-10 lg:px-20 xl:px-40 2xl:px-72'>
+    <div class='m-6'>
+        <p style="font-family: Poppins-Bold" class='text-4xl font-extrabold py-5 text-center md:text-start'>About Me</p>
+        <p class='text-justify text-xl' >
+            &#128075; Hi,<br><br>
+        
+            {{ about_me.introduction }}<br><br>
+        
+            Check out my <a href="{% url 'projects' %}" class='bg-left-bottom bg-gradient-to-r from-cyan-300 to-blue-500 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out'>projects</a>.<br><br>
+        </p>
+        
+        <!-- Show the latest uploaded project -->
+        {% if latest_project %}
+        <div style="box-shadow:0 5px 30px 0 rgba(0,0,0,.05); width: 100%;" class='flex flex-col md:flex-row gap-4 md:gap-x-8 bg-gray-900 p-5 mb-4 rounded-lg'>
+        
+            <!-- Project image carousel -->
+            <div style="width: 40%;">
+                <div class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for image in latest_project.images.all %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            <img src="{{ image.image.url }}" class="d-block w-100" alt="Project Image">
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        
+            <!-- Project details -->
+            <div style="width: 60%;">
+                <p style="font-family: Poppins-Bold" class="font-bold text-xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-200 via-blue-300 to-blue-600">{{ latest_project.title }}</p>
+                <p class='text-justify my-3'>{{ latest_project.meta }}</p>
+                <span class='text-lg font-bold'>Technologies used</span><br>
+                <div class='flex space-x-2 my-3'>
+                    {% for tech in latest_project.technologies.all %}
+                    <span class='text-xs bg-gradient-to-r from-cyan-500 to-blue-500 py-1 px-4 rounded-full'>
+                        <i class="fa-brands {{ tech.icon_class }}"></i> {{ tech.name }}
+                    </span>
+                    {% endfor %}
+                </div>
+                <div class='flex space-x-4 my-3'>
+                    {% if latest_project.github_link %}
+                    <a href='{{ latest_project.github_link }}' target='_blank'><button class='bg-gray-800 p-2 px-4 rounded-[6px] hover:bg-slate-700 transition delay-75 ease-in-out'><i class="bi bi-github"></i> Github</button></a>
+                    {% endif %}
+                    {% if latest_project.demo_link %}
+                    <a href='{{ latest_project.demo_link }}' target='_blank'><button class='bg-blue-600 p-2 px-4 rounded-[6px] hover:bg-gray-800 transition delay-75 ease-in-out'>Demo <i class="bi bi-box-arrow-up-right"></i></button></a>
+                    {% endif %}
+                </div>
+                <p class='mt-2 mb-4 text-gray-400'>
+                    by <i class="bi bi-person"></i> {{ latest_project.user.username }} 
+                    <i class="bi bi-dot"></i> <span><i class="bi bi-calendar4-event"></i> {{ latest_project.time }}</span> 
+                </p>
+                <a href='{% url 'project_detail' id=latest_project.id %}'><button class='bg-blue-600 p-2 px-4 rounded-[6px] hover:bg-gray-800 transition delay-75 ease-in-out'>Read more <i class="bi bi-arrow-right"></i></button></a>
+            </div>
+        </div>
+        {% else %}
+            <p>No projects to display.</p>
+        {% endif %}
+        <div class='my-10'>
+            <p style="font-family: Poppins-Bold" class='text-4xl font-extrabold py-5 text-center md:text-start'>Skills</p>
+            <div class='grid grid-cols-1 md:grid-cols-2 md:space-x-4 lg:space-x-10'>
+                {% for skill in about_me.skills.all %}
+                    <div class='my-3'>
+                        <div style="display: flex; gap: 2%;">
+                            <p class="text-base font-medium my-3">{{ skill.SkillName }}</p>
+                            <p class="text-base font-medium my-3">{{ skill.level }}%</p>
+                        </div>
+                        <div class="progress-bar w-full md:w-80 lg:w-full bg-gray-700 rounded-full h-2.5">
+                            <div class="bg-gradient-to-r from-cyan-300 to-blue-600 h-2.5 rounded-full" style="width: {{ skill.level }}%"></div>
+                        </div>  
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <!-- <div class="my-10">
+            {% if about_me.resume %}
+                <a href="{{ about_me.resume.url }}" class="bg-blue-500 text-white p-2 rounded">Download Resume</a>
+            {% endif %}
+        </div> -->
+    </div>
+
+    <style>
+        .progress-bar {
+            animation: progress-bar-animation 1s normal forwards;
+        }
+        @keyframes progress-bar-animation {
+            0%   {  width: 0%; }
+            100% {  width: 100%; }
+        }
+    </style>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Add Project{% endblock title %}
+
+{% block content %}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- FontAwesome for icons -->
+
+<div class='bg-gray-800 text-white p-5 md:py-8 md:px-20 lg:px-40 xl:px-60'>
+  <div class='text-4xl font-extrabold py-5'>Add New Project</div>
+  
+  <form method="post" action="{% url 'add_project' %}" enctype="multipart/form-data">
+      {% csrf_token %}
+      <label class="block">Title</label>
+      <input type="text" class="w-full border border-gray-700 bg-gray-800 rounded-lg py-2 px-4" placeholder="Enter project title" name="title" required />
+
+      <label class="block mt-4">Description</label>
+      <textarea class="w-full border border-gray-700 bg-gray-800 rounded-lg py-2 px-4" placeholder="Enter project description" name="description" rows="4" required></textarea>
+
+      <label class="block mt-4">Meta Discription</label>
+      <textarea class="w-full border border-gray-700 bg-gray-800 rounded-lg py-2 px-4" placeholder="Enter project Meta" name="Meta" rows="4" required></textarea>
+
+      <label class="block mt-4">Category</label>
+      <textarea class="w-full border border-gray-700 bg-gray-800 rounded-lg py-2 px-4" placeholder="Enter project Category" name="Project_category" rows="4" required></textarea>
+
+      <label class="block mt-4">Technologies</label>
+      <select multiple name="technologies" class="w-full border border-gray-700 bg-gray-800 rounded-lg py-2 px-4">
+        {% for tech_name, icon_class in technologies_dict.items %}
+        <option value="{{ tech_name }}" data-icon="{{ icon_class }}">{{ tech_name }}</option>
+        {% endfor %}
+        <option value="other" data-icon="">Other (type your own)</option>
+      </select>
+      <input type="text" name="custom_technology" placeholder="Type your technology here (if 'Other' selected)" class="w-full border border-gray-700 bg-gray-800 rounded-lg py-2 px-4 mt-2" />
+
+      <label class="block mt-4">GitHub Link</label>
+      <input type="url" class="w-full border border-gray-700 bg-gray-800 rounded-lg py-2 px-4" placeholder="Enter GitHub link (optional)" name="github_link" />
+
+      <label class="block mt-4">Demo Link</label>
+      <input type="url" class="w-full border border-gray-700 bg-gray-800 rounded-lg py-2 px-4" placeholder="Enter demo link (optional)" name="demo_link" />
+
+      <label class="block mt-4">Project Images</label>
+      <input type="file" class="w-full border border-gray-700 bg-gray-800 rounded-lg py-2 px-4" name="images" multiple />
+
+      <label class="block mt-4">Certificate (optional)</label>
+      <input type="file" class="w-full border border-gray-700 bg-gray-800 rounded-lg py-2 px-4" name="certificate" />
+
+      <div class="mt-4 flex justify-end">
+          <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full" type="submit">Save Project</button>
+      </div>
+  </form>
+</div>
+{% endblock %}

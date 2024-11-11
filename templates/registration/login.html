@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock title %}
+
+{% block hide_login_logout %}
+    <style>
+        #logoutIcon, #loginIcon {
+            display: none;
+        }
+    </style>
+{% endblock hide_login_logout %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="../../static/css/login.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+{% if messages %}
+    <div class="messages grid place-content-center">
+        {% for message in messages %}
+        <div{% if message.tags %} class="{{ message.tags }} bg-slate-700 py-3 px-5 mx-5 rounded-lg flex items-center justify-center text-sm md:text-base"{% endif %}>
+            <p class=''><i class="fa-regular fa-bell"></i> {{ message }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+<div class="wrapper">
+    <div class="text-center mt-4 name">
+        Welcome to My Portfolio
+    </div>
+
+    <!-- Form for logging in -->
+    <form class="p-3 mt-3" method="post" action="{% url 'login_user' %}?next={{ request.GET.next }}">
+        {% csrf_token %}
+        
+        <!-- Username input -->
+        <div class="form-field d-flex align-items-center">
+            <span class="far fa-user"></span>
+            <input type="text" name="username" id="userName" placeholder="Username" class="form-control" required>
+        </div>
+
+        <!-- Password input -->
+        <div class="form-field d-flex align-items-center">
+            <span class="fas fa-key"></span>
+            <input type="password" name="password" id="pwd" placeholder="Password" class="form-control" required>
+        </div>
+        
+        <!-- Login button -->
+        <button type="submit" class="btn mt-3">Login</button>
+    </form>
+
+    <!-- Links to forgot password and registration -->
+    <div class="text-center fs-6">
+        <a href="{% url 'register' %}">Sign up</a>
+    </div>
+</div>
+{% endblock %}

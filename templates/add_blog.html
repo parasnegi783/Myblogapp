@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="fixed z-10 inset-0 overflow-y-auto" id="blogModal"> <!-- removed hidden class -->
+    <div class="flex items-center justify-center min-h-screen bg-gray-800 bg-opacity-75 px-4">
+        <div class="bg-gray-900 text-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full p-6">
+            <div class="flex justify-between items-center">
+                <h3 class="text-lg leading-6 font-medium">Add New Blog</h3>
+                <!-- Removed the close button as it's not needed -->
+            </div>
+            <div class="mt-4">
+                <form id="blogForm" method="post" action="{% url 'add_blog' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <!-- Form fields -->
+                    <label class="block">Title</label>
+                    <input type="text" class="w-full border border-gray-700 bg-gray-800 rounded-lg py-2 px-4" placeholder="Enter blog title" name="title" required />
+
+                    <label class="block mt-4">Meta Description</label>
+                    <input type="text" class="w-full border border-gray-700 bg-gray-800 rounded-lg py-2 px-4" placeholder="Enter meta description" name="meta" required />
+
+                    <label class="block mt-4">Content</label>
+                    <textarea class="w-full border border-gray-700 bg-gray-800 rounded-lg py-2 px-4" id="richtext_field" placeholder="Enter blog content" name="content" rows="4" required></textarea>
+                    
+                    <label class="block mt-4">Thumbnail Image</label>
+                    <input type="file" class="w-full border border-gray-700 bg-gray-800 rounded-lg py-2 px-4" name="thumbnail_img" accept="image/*" />
+
+                    <label class="block mt-4">Images</label>
+                    <input type="file" class="w-full border border-gray-700 bg-gray-800 rounded-lg py-2 px-4" name="images" multiple />
+
+                    <label class="block mt-4">Category</label>
+                    <input type="text" class="w-full border border-gray-700 bg-gray-800 rounded-lg py-2 px-4" placeholder="Enter category" name="category" required />
+
+                    <label class="block mt-4">Date</label>
+                    <input type="date" class="w-full border border-gray-700 bg-gray-800 rounded-lg py-2 px-4" name="time" required />
+
+                    <div class="mt-4 flex justify-end">
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full" type="submit">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.ckeditor.com/ckeditor5/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#richtext_field'))
+            .catch(error => {
+                console.error('Error initializing CKEditor:', error);
+            });
+    </script>
+</div>
+
+{% endblock %}

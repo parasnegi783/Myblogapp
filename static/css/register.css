@@ -1,0 +1,109 @@
+/* Importing fonts from Google */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Resetting */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #1a1a1a;
+    color: #e0e0e0;
+}
+
+.container {
+    max-width: 400px;
+    margin: 80px auto;
+    padding: 40px 30px 30px 30px;
+    background-color: #2b2b2b;
+    border-radius: 15px;
+    box-shadow: 13px 13px 20px #171717, -13px -13px 20px #3e3e3e;
+}
+
+.container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #e0e0e0;
+}
+
+.input_box {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.input_box input {
+    width: 100%;
+    padding: 10px 10px 10px 40px;
+    background: none;
+    border: none;
+    border-bottom: 1px solid #b0b0b0;
+    color: #b0b0b0;
+    font-size: 1rem;
+    outline: none;
+}
+
+.input_box label {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    color: #b0b0b0;
+    pointer-events: none;
+    transition: 0.5s;
+}
+
+.input_box input:focus ~ label,
+.input_box input:valid ~ label {
+    top: -15px;
+    left: 0;
+    color: #0A58CA;
+    font-size: 0.8rem;
+}
+
+.password_container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.password_container i {
+    position: absolute;
+    right: 10px;
+    color: #b0b0b0;
+    cursor: pointer;
+}
+
+.signup_button {
+    width: 100%;
+    padding: 10px;
+    background-color: #0A58CA;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    box-shadow: 3px 3px 3px #1a1a1a, -3px -3px 3px #3e3e3e;
+    font-size: 1rem;
+    letter-spacing: 1.3px;
+    cursor: pointer;
+}
+
+.signup_button:hover {
+    background-color: #0A58CA;
+}
+
+.login_link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.login_link a {
+    text-decoration: none;
+    color: #0A58CA;
+    font-size: 0.8rem;
+}
+
+.login_link a:hover {
+    color: #0A58CA;
+}

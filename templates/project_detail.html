@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ project.title }}{% endblock title %}
+
+{% block content %}
+<div class='bg-gray-800 text-white p-8 pt-12 flex flex-col md:px-20 lg:px-36 xl:px-60 2xl:px-80'>
+    <!-- Project Title -->
+    <span class='text-center text-3xl md:text-4xl font-bold text-cyan-200 hover:text-cyan-300 transition duration-300'>
+        {{ project.title }}
+    </span>
+    
+    <!-- Project Description -->
+    <p class='text-center mt-2 text-gray-400'>
+        {{ project.description }}
+    </p>
+
+    <!-- Project Images -->
+    <div class='my-6 flex flex-wrap justify-center'>
+        {% for image in project.images.all %}
+        <img class='rounded-lg mx-2 my-2' src="{{ image.image.url }}" alt="Project Image" style="max-width: 100%; height: auto;">
+        {% endfor %}
+    </div>
+
+    <!-- Technologies Used -->
+    <div class='text-center my-6'>
+        <span class='text-lg font-bold'>Technologies Used:</span>
+        <div class='flex flex-wrap justify-center my-3'>
+            {% for tech in project.technologies.all %}
+            <span class='text-xs bg-gradient-to-r from-cyan-500 to-blue-500 py-1 px-4 rounded-full mx-1 my-1'>
+                <i class="fa-brands {{ tech.icon_class }}"></i> {{ tech.name }}
+            </span>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Project Links -->
+    <div class='text-center my-6'>
+        {% if project.github_link %}
+        <a href='{{ project.github_link }}' target='_blank'>
+            <button class='bg-gray-800 p-2 px-4 rounded-[6px] hover:bg-slate-700 outline hover:outline-none outline-slate-700 transition delay-75 ease-in-out'>
+                <i class="bi bi-github"></i> GitHub
+            </button>
+        </a>
+        {% endif %}
+        {% if project.demo_link %}
+        <a href='{{ project.demo_link }}' target='_blank'>
+            <button class='bg-blue-600 p-2 px-4 rounded-[6px] hover:bg-gray-800 hover:outline hover:outline-blue-600 transition delay-75 ease-in-out'>
+                Demo <i class="bi bi-box-arrow-up-right"></i>
+            </button>
+        </a>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    h1, h2, h3, h4, h5, h6 {
+        font-size: revert;
+        font-weight: revert;
+    }
+
+    p a {
+        color: #67e8f9;
+        background: 
+          linear-gradient(to right, rgba(103,232,249, 1), rgba(59, 130, 246, 1)),
+          linear-gradient(to right, rgba(34,211,238, 1), rgba(59, 130, 246, 1), rgba(29, 78, 216, 1));
+        background-size: 100% 0.1em, 0 0.1em;
+        background-position: 100% 100%, 0 100%;
+        background-repeat: no-repeat;
+        transition: background-size 400ms;
+    }
+
+    p a:hover, p a:focus {
+        background-size: 0 0.1em, 100% 0.1em;
+    }
+
+    p img {
+        border-radius: 8px;
+    }
+</style>
+{% endblock %}
